@@ -19,6 +19,11 @@ extension Path {
         let scaleW = rect.width/boundingRect.width
         let scaleH = rect.height/boundingRect.height
         let scaleFactor = min(scaleW, scaleH)
+        
+        print("Path.scaled(): " +
+            "\n   boundingRect: {\(boundingRect)} " +
+            "\n   toFitRect: {\(rect)}")
+        
         return applying(CGAffineTransform(scaleX: scaleFactor, y: scaleFactor))
     }
     
@@ -46,12 +51,13 @@ extension Path {
         }
         print("\nextension Path.verticesOnly(): {\(points.count)} points")
         print("boundingRect: {\(self.boundingRect)}")
-        for (ix, pt) in points.enumerated() {
-            print("[\(ix)]: {" +
-                "x: \(pt.x.format(f: ".4")) " +
-                "y: \(pt.y.format(f: ".4"))}")
-            
-        }
+        
+//        for (ix, pt) in points.enumerated() {
+//            print("[\(ix)]: {" +
+//                "x: \(pt.x.format(f: ".4")) " +
+//                "y: \(pt.y.format(f: ".4"))}")
+//        }
+        
         return points
     }
 }

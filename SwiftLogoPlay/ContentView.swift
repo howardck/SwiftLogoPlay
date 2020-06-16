@@ -10,21 +10,57 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack(spacing: 20) {
-            logoStack
-            Color.blue
+        
+        GeometryReader { gr in
+            LogosStack(size: gr.size)
         }
     }
+}
+
+class LinesOnlyModel: ObservableObject {
     
-    private var logoStack : some View {
+    @Published var points: [CGPoint]
+    var bounds: CGRect
+    
+    init(source: UIBezierPath) {
+        bounds = source.bounds
+        points = Path(source.cgPath).verticesOnly()
+        
+        print("LinesOnlyModel.init(). bounds: {\(bounds)}")
+    }
+    
+    func updateBounds(newBounds: CGRect) {
+        
+        print("LineOnlyModel.update(): " +
+            "\n   oldBounds: {\(self.bounds)} " +
+            "\n   newBounds: {\(newBounds)}")
+        
+        self.points = points.map {
+            let scaleX = newBounds.width/self.bounds.width
+            let y = newBounds.height/self.bounds.height
+            let scale = min(scaleX, y)
+            return $0.applying(CGAffineTransform(scaleX: scale, y: scale))
+        }
+    }
+}
+
+struct LogosStack : View {
+    
+    var model: LinesOnlyModel = LinesOnlyModel(source: SourceLogo.sourceBezier)
+    
+    init(size: CGSize) {
+        model.updateBounds(newBounds: CGRect(origin: .zero, size: size))
+    }
+    
+    var body: some View {
         ZStack {
             SourceLogo()
                 .fill(Color.orange)
-            LineOnlyLogo()
+            LineOnlyLogo(model: model)
                 .fill(Color.init(white: 0.8))
-            LineOnlyLogo(bezierType: .lineSegments)
+            LineOnlyLogo(model: model, bezierType: .lineSegments)
                 .stroke(Color.black, lineWidth: 1)
-            LineOnlyLogo(bezierType: .markers, radius: 5)
+            LineOnlyLogo(model: model, bezierType: .markers, radius: 5)
                 .fill(Color.red)
         }
     }

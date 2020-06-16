@@ -14,23 +14,19 @@ enum BezierType {
 }
 
 struct LineOnlyLogo : Shape {
+    var model : LinesOnlyModel
     
-    var bezierType : BezierType
+    var bezierType : BezierType = .lineSegments
     //var vertices: [CGPoint]
-    var radius : CGFloat   // iff type == .markers; kludgy?
+    var radius : CGFloat = 5  // iff type == .markers; kludgy?
 
-    init(bezierType: BezierType = .lineSegments,
-         //vertices: [CGPoint],
-         radius: CGFloat = 5) {
-        
-        self.bezierType = bezierType
-        //self.vertices = vertices
-        self.radius = radius
-    }
-    
     func path(in rect: CGRect) -> Path {
-
-        let points = SourceLogo().path(in: rect).verticesOnly()
+        
+        // GOOD!
+//     let points = SourceLogo().path(in: rect).verticesOnly()
+//
+//        // BAD!
+        let points = model.points
         
         return Path { path in
             for (ix, pt) in points.enumerated() {
@@ -50,6 +46,7 @@ struct LineOnlyLogo : Shape {
 
 struct LineOnlyLogo_Previews: PreviewProvider {
     static var previews: some View {
-        LineOnlyLogo()
+        LineOnlyLogo(model: LinesOnlyModel(source: SourceLogo.sourceBezier))
+            .fill(Color.init(white: 0.7))
     }
 }
