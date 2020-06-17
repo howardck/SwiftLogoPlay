@@ -35,18 +35,19 @@ class LinesOnlyModel: ObservableObject {
             "\n   oldBounds: {\(self.bounds)} " +
             "\n   newBounds: {\(newBounds)}")
         
+        let scaleX = newBounds.width/self.bounds.width
+        let scaleY = newBounds.height/self.bounds.height
+        let scale = min(scaleX, scaleY)
+        
         self.points = points.map {
-            let scaleX = newBounds.width/self.bounds.width
-            let y = newBounds.height/self.bounds.height
-            let scale = min(scaleX, y)
-            return $0.applying(CGAffineTransform(scaleX: scale, y: scale))
+            $0.applying(CGAffineTransform(scaleX: scale, y: scale))
         }
     }
 }
 
 struct LogosStack : View {
     
-    var model: LinesOnlyModel = LinesOnlyModel(source: SourceLogo.sourceBezier)
+    @ObservedObject var model: LinesOnlyModel = LinesOnlyModel(source: SourceLogo.sourceBezier)
     
     init(size: CGSize) {
         model.updateBounds(newBounds: CGRect(origin: .zero, size: size))
@@ -56,12 +57,18 @@ struct LogosStack : View {
         ZStack {
             SourceLogo()
                 .fill(Color.orange)
+            SourceLogo()
+                .stroke(Color.black, lineWidth: 0.4)
             LineOnlyLogo(model: model)
-                .fill(Color.init(white: 0.8))
+                .fill(Color.init(white: 0.7))
             LineOnlyLogo(model: model, bezierType: .lineSegments)
                 .stroke(Color.black, lineWidth: 1)
             LineOnlyLogo(model: model, bezierType: .markers, radius: 5)
                 .fill(Color.red)
+        }
+        .background(Color.init(white: 0.9))
+        .onTapGesture {
+            print("TAPPED!")
         }
     }
 }

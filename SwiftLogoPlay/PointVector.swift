@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct AnimatableVector {
+struct PointVector {
     var vertices : [CGPoint]
     
     init(with points: [CGPoint]) {
@@ -19,7 +19,7 @@ struct AnimatableVector {
     }
 }
 
-extension AnimatableVector : VectorArithmetic {
+extension PointVector : VectorArithmetic {
     var magnitudeSquared: Double { 0 }
     
     mutating func scale(by: Double) {
@@ -29,27 +29,27 @@ extension AnimatableVector : VectorArithmetic {
         }
     }
     
-    static var zero : AnimatableVector {
-        return AnimatableVector()
+    static var zero : PointVector {
+        return PointVector()
     }
-    static func - (lhs: AnimatableVector, rhs: AnimatableVector) -> AnimatableVector {
+    static func - (lhs: PointVector, rhs: PointVector) -> PointVector {
         var ret = [CGPoint]()
         for i in 0..<min(lhs.vertices.count, rhs.vertices.count) {
             ret.append(CGPoint(x: lhs.vertices[i].x - rhs.vertices[i].x, y: lhs.vertices[i].y - rhs.vertices[i].y))
         }
-        return AnimatableVector(with: ret)
+        return PointVector(with: ret)
     }
-    static func + (lhs: AnimatableVector, rhs: AnimatableVector) -> AnimatableVector {
+    static func + (lhs: PointVector, rhs: PointVector) -> PointVector {
         var ret = [CGPoint]()
         for i in 0..<min(lhs.vertices.count, rhs.vertices.count) {
             ret.append(CGPoint(x: lhs.vertices[i].x + rhs.vertices[i].x, y: lhs.vertices[i].y + rhs.vertices[i].y))
         }
-        return AnimatableVector(with: ret)
+        return PointVector(with: ret)
     }
-    static func -= (lhs: inout AnimatableVector, rhs: AnimatableVector) {
+    static func -= (lhs: inout PointVector, rhs: PointVector) {
         lhs = lhs - rhs
     }
-    static func += (lhs: inout AnimatableVector, rhs: AnimatableVector) {
+    static func += (lhs: inout PointVector, rhs: PointVector) {
         lhs = lhs + rhs
     }
     
