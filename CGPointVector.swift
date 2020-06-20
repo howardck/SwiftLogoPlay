@@ -10,30 +10,30 @@
 
 import SwiftUI
 
-struct AnimatableCGPointVector: VectorArithmetic {
-    static var zero = AnimatableCGPointVector(values: [.zero])
+struct CGPointVector: VectorArithmetic {
+    static var zero = CGPointVector(values: [.zero])
 
-    static func - (lhs: AnimatableCGPointVector, rhs: AnimatableCGPointVector) -> AnimatableCGPointVector {
+    static func - (lhs: CGPointVector, rhs: CGPointVector) -> CGPointVector {
         let values = zip(lhs.values, rhs.values)
             .map { lhs, rhs in lhs.animatableData - rhs.animatableData }
             .map { CGPoint(x: $0.first, y: $0.second) }
-        return AnimatableCGPointVector(values: values)
+        return CGPointVector(values: values)
     }
 
-    static func -= (lhs: inout AnimatableCGPointVector, rhs: AnimatableCGPointVector) {
+    static func -= (lhs: inout CGPointVector, rhs: CGPointVector) {
         for i in 0..<min(lhs.values.count, rhs.values.count) {
             lhs.values[i].animatableData -= rhs.values[i].animatableData
         }
     }
 
-    static func + (lhs: AnimatableCGPointVector, rhs: AnimatableCGPointVector) -> AnimatableCGPointVector {
+    static func + (lhs: CGPointVector, rhs: CGPointVector) -> CGPointVector {
         let values = zip(lhs.values, rhs.values)
             .map { lhs, rhs in lhs.animatableData + rhs.animatableData }
             .map { CGPoint(x: $0.first, y: $0.second) }
-        return AnimatableCGPointVector(values: values)
+        return CGPointVector(values: values)
     }
 
-    static func += (lhs: inout AnimatableCGPointVector, rhs: AnimatableCGPointVector) {
+    static func += (lhs: inout CGPointVector, rhs: CGPointVector) {
         for i in 0..<min(lhs.values.count, rhs.values.count) {
             lhs.values[i].animatableData += rhs.values[i].animatableData
         }
