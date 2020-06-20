@@ -13,6 +13,40 @@ enum BezierType {
     case lineSegments
 }
 
+struct LogosStack : View {
+    
+    @ObservedObject var model: LinesOnlyModel
+        = LinesOnlyModel(source: SourceLogo.sourceBezier)
+    
+    init(size: CGSize) {
+        model.updateBounds(newBounds: CGRect(origin: .zero, size: size))
+    }
+    
+    var body: some View {
+        ZStack {
+            
+            SourceLogo()
+                .fill(Color.orange)
+            SourceLogo()
+                .stroke(Color.black, lineWidth: 0.4)
+            
+            LinesOnlyLogo(model: model)
+                .fill(Color.init(white: 0.75))
+            LinesOnlyLogo(model: model, bezierType: .lineSegments)
+                .stroke(Color.black, lineWidth: 1)
+            LinesOnlyLogo(model: model, bezierType: .markers, radius: 5)
+                .fill(Color.red)
+        }
+        .background(Color.init(white: 0.9))
+        .onTapGesture {
+            print("TAPPED!")
+            
+            self.model.points.removeAll(keepingCapacity: false)
+            
+        }
+    }
+}
+
 struct LinesOnlyLogo : Shape {
     var model : LinesOnlyModel
     

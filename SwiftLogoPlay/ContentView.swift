@@ -18,62 +18,31 @@ struct ContentView: View {
 }
 
 class LinesOnlyModel: ObservableObject {
-    
     @Published var points: [CGPoint]
-    var bounds: CGRect
+    
+    var sourceBounds: CGRect
     
     init(source: UIBezierPath) {
-        bounds = source.bounds
+        sourceBounds = source.bounds
         points = Path(source.cgPath).verticesOnly()
         
-        print("LinesOnlyModel.init(). bounds: {\(bounds)}")
+        print("LinesOnlyModel.init(). sourceBounds: {\(sourceBounds)}")
     }
     
+    // we've now determined our actual playing field;
+    // update our points array to match
     func updateBounds(newBounds: CGRect) {
         
 //        print("LineOnlyModel.updateBounds(): " +
 //            "\n   oldBounds: {\(self.bounds)} " +
 //            "\n   newBounds: {\(newBounds)}")
         
-        let scaleX = newBounds.width/self.bounds.width
-        let scaleY = newBounds.height/self.bounds.height
+        let scaleX = newBounds.width/self.sourceBounds.width
+        let scaleY = newBounds.height/self.sourceBounds.height
         let scale = min(scaleX, scaleY)
         
-        self.points = points.map {
+        self.points = self.points.map {
             $0.applying(CGAffineTransform(scaleX: scale, y: scale))
-        }
-    }
-}
-
-struct LogosStack : View {
-    
-    @ObservedObject var model: LinesOnlyModel
-        = LinesOnlyModel(source: SourceLogo.sourceBezier)
-    
-    init(size: CGSize) {
-        print("LogosStack.init() -------------------------------------")
-        model.updateBounds(newBounds: CGRect(origin: .zero, size: size))
-    }
-    
-    var body: some View {
-        ZStack {
-            SourceLogo()
-                .fill(Color.orange)
-            SourceLogo()
-                .stroke(Color.black, lineWidth: 0.4)
-            LinesOnlyLogo(model: model)
-                .fill(Color.init(white: 0.75))
-            LinesOnlyLogo(model: model, bezierType: .lineSegments)
-                .stroke(Color.black, lineWidth: 1)
-//            LinesOnlyLogo(model: model, bezierType: .markers, radius: 5)
-//                .fill(Color.red)
-        }
-        .background(Color.init(white: 0.9))
-        .onTapGesture {
-            print("TAPPED!")
-            
-            self.model.points.removeAll(keepingCapacity: false)
-            
         }
     }
 }
