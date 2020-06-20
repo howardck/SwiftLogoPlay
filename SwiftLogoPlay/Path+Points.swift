@@ -8,6 +8,9 @@
 
 import SwiftUI
 
+/*
+ example usage: print("\(123.456).format: ".2"))")
+ */
 extension CGFloat {
     func format(f: String) -> String {
         return String(format: "%\(f)f", self)
@@ -20,9 +23,9 @@ extension Path {
         let scaleH = rect.height/boundingRect.height
         let scaleFactor = min(scaleW, scaleH)
         
-        print("Path.scaled(): " +
-            "\n   boundingRect: {\(boundingRect)} " +
-            "\n   toFitRect: {\(rect)}")
+//        print("Path.scaled(): " +
+//            "\n   boundingRect: {\(boundingRect)} " +
+//            "\n   toFitRect: {\(rect)}")
         
         return applying(CGAffineTransform(scaleX: scaleFactor, y: scaleFactor))
     }
@@ -49,8 +52,8 @@ extension Path {
                 points.append(to)
             }
         }
-        print("\nextension Path.verticesOnly(): {\(points.count)} points")
-        print("boundingRect: {\(self.boundingRect)}")
+//        print("\nextension Path.verticesOnly(): {\(points.count)} points")
+//        print("boundingRect: {\(self.boundingRect)}")
         
 //        for (ix, pt) in points.enumerated() {
 //            print("[\(ix)]: {" +

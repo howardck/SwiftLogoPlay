@@ -31,9 +31,9 @@ class LinesOnlyModel: ObservableObject {
     
     func updateBounds(newBounds: CGRect) {
         
-        print("LineOnlyModel.update(): " +
-            "\n   oldBounds: {\(self.bounds)} " +
-            "\n   newBounds: {\(newBounds)}")
+//        print("LineOnlyModel.updateBounds(): " +
+//            "\n   oldBounds: {\(self.bounds)} " +
+//            "\n   newBounds: {\(newBounds)}")
         
         let scaleX = newBounds.width/self.bounds.width
         let scaleY = newBounds.height/self.bounds.height
@@ -47,9 +47,11 @@ class LinesOnlyModel: ObservableObject {
 
 struct LogosStack : View {
     
-    @ObservedObject var model: LinesOnlyModel = LinesOnlyModel(source: SourceLogo.sourceBezier)
+    @ObservedObject var model: LinesOnlyModel
+        = LinesOnlyModel(source: SourceLogo.sourceBezier)
     
     init(size: CGSize) {
+        print("LogosStack.init() -------------------------------------")
         model.updateBounds(newBounds: CGRect(origin: .zero, size: size))
     }
     
@@ -60,7 +62,7 @@ struct LogosStack : View {
             SourceLogo()
                 .stroke(Color.black, lineWidth: 0.4)
             LineOnlyLogo(model: model)
-                .fill(Color.init(white: 0.7))
+                .fill(Color.init(white: 0.75))
             LineOnlyLogo(model: model, bezierType: .lineSegments)
                 .stroke(Color.black, lineWidth: 1)
             LineOnlyLogo(model: model, bezierType: .markers, radius: 5)
@@ -69,6 +71,9 @@ struct LogosStack : View {
         .background(Color.init(white: 0.9))
         .onTapGesture {
             print("TAPPED!")
+            
+            self.model.points.removeAll(keepingCapacity: false)
+            
         }
     }
 }

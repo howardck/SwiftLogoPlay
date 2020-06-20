@@ -22,14 +22,8 @@ struct LineOnlyLogo : Shape {
 
     func path(in rect: CGRect) -> Path {
         
-        // GOOD!
-//     let points = SourceLogo().path(in: rect).verticesOnly()
-//
-//        // BAD!
-        let points = model.points
-        
         return Path { path in
-            for (ix, pt) in points.enumerated() {
+            for (ix, pt) in model.points.enumerated() {
                 switch(bezierType) {
                 case .lineSegments :
                     ix == 0 ?
