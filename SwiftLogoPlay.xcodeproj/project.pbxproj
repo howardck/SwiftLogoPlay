@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5E27C01B2497ED07002470B3 /* LineOnlyLogo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E27C01A2497ED07002470B3 /* LineOnlyLogo.swift */; };
 		5E27C01D2498389B002470B3 /* PointVector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E27C01C2498389B002470B3 /* PointVector.swift */; };
+		5E56B150249E52A300E428AC /* LinesOnlyLogo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E56B14F249E52A300E428AC /* LinesOnlyLogo.swift */; };
 		5E79F21C2497E129002EAAF4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E79F21B2497E129002EAAF4 /* AppDelegate.swift */; };
 		5E79F21E2497E129002EAAF4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E79F21D2497E129002EAAF4 /* SceneDelegate.swift */; };
 		5E79F2202497E129002EAAF4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E79F21F2497E129002EAAF4 /* ContentView.swift */; };
@@ -20,8 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		5E27C01A2497ED07002470B3 /* LineOnlyLogo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineOnlyLogo.swift; sourceTree = "<group>"; };
 		5E27C01C2498389B002470B3 /* PointVector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointVector.swift; sourceTree = "<group>"; };
+		5E56B14F249E52A300E428AC /* LinesOnlyLogo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinesOnlyLogo.swift; sourceTree = "<group>"; };
 		5E79F2182497E129002EAAF4 /* SwiftLogoPlay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftLogoPlay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E79F21B2497E129002EAAF4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5E79F21D2497E129002EAAF4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -66,9 +66,9 @@
 			children = (
 				5E79F2332497E2E9002EAAF4 /* Path+Points.swift */,
 				5E79F21F2497E129002EAAF4 /* ContentView.swift */,
+				5E56B14F249E52A300E428AC /* LinesOnlyLogo.swift */,
 				5E27C01C2498389B002470B3 /* PointVector.swift */,
 				5E79F2352497E325002EAAF4 /* SourceLogo.swift */,
-				5E27C01A2497ED07002470B3 /* LineOnlyLogo.swift */,
 				5E79F21B2497E129002EAAF4 /* AppDelegate.swift */,
 				5E79F21D2497E129002EAAF4 /* SceneDelegate.swift */,
 				5E79F2212497E131002EAAF4 /* Assets.xcassets */,
@@ -160,7 +160,7 @@
 			files = (
 				5E79F21C2497E129002EAAF4 /* AppDelegate.swift in Sources */,
 				5E79F2362497E325002EAAF4 /* SourceLogo.swift in Sources */,
-				5E27C01B2497ED07002470B3 /* LineOnlyLogo.swift in Sources */,
+				5E56B150249E52A300E428AC /* LinesOnlyLogo.swift in Sources */,
 				5E27C01D2498389B002470B3 /* PointVector.swift in Sources */,
 				5E79F2342497E2E9002EAAF4 /* Path+Points.swift in Sources */,
 				5E79F21E2497E129002EAAF4 /* SceneDelegate.swift in Sources */,

@@ -61,12 +61,12 @@ struct LogosStack : View {
                 .fill(Color.orange)
             SourceLogo()
                 .stroke(Color.black, lineWidth: 0.4)
-            LineOnlyLogo(model: model)
+            LinesOnlyLogo(model: model)
                 .fill(Color.init(white: 0.75))
-            LineOnlyLogo(model: model, bezierType: .lineSegments)
+            LinesOnlyLogo(model: model, bezierType: .lineSegments)
                 .stroke(Color.black, lineWidth: 1)
-            LineOnlyLogo(model: model, bezierType: .markers, radius: 5)
-                .fill(Color.red)
+//            LinesOnlyLogo(model: model, bezierType: .markers, radius: 5)
+//                .fill(Color.red)
         }
         .background(Color.init(white: 0.9))
         .onTapGesture {

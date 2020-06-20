@@ -1,5 +1,5 @@
 //
-//  LineOnlyLogo.swift
+//  LinesOnlyLogo.swift
 //  SwiftLogoPlay
 //
 //  Created by Howard Katz on 2020-06-15.
@@ -13,7 +13,7 @@ enum BezierType {
     case lineSegments
 }
 
-struct LineOnlyLogo : Shape {
+struct LinesOnlyLogo : Shape {
     var model : LinesOnlyModel
     
     var bezierType : BezierType = .lineSegments
@@ -40,7 +40,7 @@ struct LineOnlyLogo : Shape {
 
 struct LineOnlyLogo_Previews: PreviewProvider {
     static var previews: some View {
-        LineOnlyLogo(model: LinesOnlyModel(source: SourceLogo.sourceBezier))
+        LinesOnlyLogo(model: LinesOnlyModel(source: SourceLogo.sourceBezier))
             .fill(Color.init(white: 0.7))
     }
 }
