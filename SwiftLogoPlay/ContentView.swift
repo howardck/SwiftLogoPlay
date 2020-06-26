@@ -16,7 +16,7 @@ struct ContentView: View {
         }
     }
 }
-
+ 
 class LinesOnlyModel: ObservableObject {
     @Published var points: [CGPoint]
     
