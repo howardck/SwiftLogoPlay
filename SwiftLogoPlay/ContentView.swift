@@ -33,9 +33,9 @@ class LinesOnlyModel: ObservableObject {
     // update our points array to match
     func updateBounds(newBounds: CGRect) {
         
-//        print("LineOnlyModel.updateBounds(): " +
-//            "\n   oldBounds: {\(self.bounds)} " +
-//            "\n   newBounds: {\(newBounds)}")
+        print("LineOnlyModel.updateBounds(): " +
+            "\n   oldBounds: {\(self.sourceBounds)} " +
+            "\n   newBounds: {\(newBounds)}")
         
         let scaleX = newBounds.width/self.sourceBounds.width
         let scaleY = newBounds.height/self.sourceBounds.height
