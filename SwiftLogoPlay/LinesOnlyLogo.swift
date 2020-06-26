@@ -39,9 +39,10 @@ struct LogosStack : View {
         }
         .background(Color.init(white: 0.9))
         .onTapGesture {
-            print("TAPPED!")
+            print("TAPPED")
             
-            self.model.points.removeAll(keepingCapacity: false)
+            //self.model.points.removeAll(keepingCapacity: false)
+            self.model.advanceVerticesToNextPosition()
             
         }
     }
@@ -49,9 +50,8 @@ struct LogosStack : View {
 
 struct LinesOnlyLogo : Shape {
     var model : LinesOnlyModel
-    
     var bezierType : BezierType = .lineSegments
-    //var vertices: [CGPoint]
+
     var radius : CGFloat = 5  // iff type == .markers; kludgy?
 
     func path(in rect: CGRect) -> Path {

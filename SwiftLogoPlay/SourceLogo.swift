@@ -29,12 +29,14 @@ struct SourceLogo : Shape {
         shape.addCurve(to: CGPoint(x: 4.56, y: 25.47),
                        controlPoint1: CGPoint(x: 1.33, y: 23.8),
                        controlPoint2: CGPoint(x: 2.89, y: 24.69))
+        
         shape.addCurve(to: CGPoint(x: 22.58, y: 25.48),
                        controlPoint1: CGPoint(x: 11.23, y: 28.59),
                        controlPoint2: CGPoint(x: 17.89, y: 28.38))
-        shape.addCurve(to: CGPoint(x: 22.58, y: 25.47),
-                       controlPoint1: CGPoint(x: 22.58, y: 25.47),
-                       controlPoint2: CGPoint(x: 22.58, y: 25.47))
+//        shape.addCurve(to: CGPoint(x: 22.58, y: 25.47),
+//                       controlPoint1: CGPoint(x: 22.58, y: 25.47),
+//                       controlPoint2: CGPoint(x: 22.58, y: 25.47))
+        
         shape.addCurve(to: CGPoint(x: 6.01, y: 8.23),
                        controlPoint1: CGPoint(x: 15.9, y: 20.35),
                        controlPoint2: CGPoint(x: 10.23, y: 13.68))
@@ -74,8 +76,8 @@ struct SourceLogo : Shape {
         shape.addCurve(to: CGPoint(x: 29.89, y: 33.05),
                        controlPoint1: CGPoint(x: 36.62, y: 30.65),
                        controlPoint2: CGPoint(x: 32.16, y: 32.09))
-        shape.addLine(to: CGPoint(x: 29.89, y: 33.05))
-        shape.close()
+        //shape.addLine(to: CGPoint(x: 29.89, y: 33.05))
+        //shape.close()
         
         return shape
     }

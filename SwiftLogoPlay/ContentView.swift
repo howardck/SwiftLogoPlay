@@ -45,6 +45,15 @@ class LinesOnlyModel: ObservableObject {
             $0.applying(CGAffineTransform(scaleX: scale, y: scale))
         }
     }
+    
+    func advanceVerticesToNextPosition() {
+        print("Model.advanceVerticesToNextPosition()")
+        let firstPt = points.first!
+        for index in 0..<points.count - 1 {
+            points[index] = points[index + 1]
+        }
+        points[points.count - 1] = firstPt
+    }
 }
 
 struct ContentView_Previews: PreviewProvider {
