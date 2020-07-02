@@ -13,68 +13,67 @@ enum BezierType {
     case lineSegments
 }
 
-struct LogosStack : View {
+struct LogosStackView : View {
     
-    @ObservedObject var model: LinesOnlyModel
-        = LinesOnlyModel(source: SourceLogo.sourceBezier)
+    //@State vector =
+    @ObservedObject var model = LinesOnlyModel(source: SourceLogo.TEST_BEZIER)
     
-    init(size: CGSize) {
-        model.updateBounds(newBounds: CGRect(origin: .zero, size: size))
-    }
     
     var body: some View {
         ZStack {
             
-            SourceLogo()
-                .fill(Color.orange)
-            SourceLogo()
-                .stroke(Color.black, lineWidth: 0.4)
+//            SourceLogo()
+//                .fill(Color.orange)
+//            SourceLogo()
+//                .stroke(Color.black, lineWidth: 0.4)
+//
+//            LinesOnlyLogo(model: model)
+//                .fill(Color.init(white: 0.85))
+//            LinesOnlyLogo(vector: model.vector, bezierType: .lineSegments)
+//                .stroke(Color.black, lineWidth: 1)
             
-            LinesOnlyLogo(model: model)
-                .fill(Color.init(white: 0.75))
-            LinesOnlyLogo(model: model, bezierType: .lineSegments)
-                .stroke(Color.black, lineWidth: 1)
-            LinesOnlyLogo(model: model, bezierType: .markers, radius: 5)
+            LinesOnlyLogo(vector: self.model.vector,
+                          bezierType: .markers,
+                          radius: 8)
                 .fill(Color.red)
+//                .stroke(Color.red, lineWidth: 2)
         }
         .background(Color.init(white: 0.9))
         .onTapGesture {
-            print("TAPPED")
+            print("TAP")
             
-            //self.model.points.removeAll(keepingCapacity: false)
-            self.model.advanceVerticesToNextPosition()
-            
+            //self.model.advanceVerticesToNextPosition()
+            self.model.movePointsInward(by: 20)
         }
     }
 }
 
 struct LinesOnlyLogo : Shape {
-    var model : LinesOnlyModel
+    
+    var vector: CGPointVector
+    var animatableData: CGPointVector {
+        get { vector }
+        set { vector = newValue }
+    }
     var bezierType : BezierType = .lineSegments
-
     var radius : CGFloat = 5  // iff type == .markers; kludgy?
 
     func path(in rect: CGRect) -> Path {
-        
+        print("LinesOnlyLogo.path()")
+
         return Path { path in
-            for (ix, pt) in model.points.enumerated() {
+            for (ix, pt) in vector.values.enumerated() {
                 switch(bezierType) {
                 case .lineSegments :
                     ix == 0 ?
                         path.move(to: pt) :
                         path.addLine(to: pt)
                 case .markers :
+                    print("LinesOnlyLogo.path(). [\(ix)]")
                     path.move(to: pt)
                     path.addMarker(radius: radius)
                 }
             }
         }
-    }
-}
-
-struct LineOnlyLogo_Previews: PreviewProvider {
-    static var previews: some View {
-        LinesOnlyLogo(model: LinesOnlyModel(source: SourceLogo.sourceBezier))
-            .fill(Color.init(white: 0.7))
     }
 }

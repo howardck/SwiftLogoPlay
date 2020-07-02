@@ -17,6 +17,19 @@ struct SourceLogo : Shape {
         return logoPath.scaled(toFit: rect)
     }
     
+    static var TEST_BEZIER  : UIBezierPath {
+        let r = CGRect(origin: CGPoint(x: 200, y: 200),
+                       size: CGSize(width: 200, height: 400))
+        let path = UIBezierPath()
+        path.move(to: CGPoint(x: r.minX, y: r.minY))
+        path.addLine(to: CGPoint(x: r.maxX, y: r.minY))
+        path.addLine(to: CGPoint(x: r.maxX, y: r.maxY))
+        path.addLine(to: CGPoint(x: r.minX, y: r.maxY))
+        path.close()
+        //path.addLine(to: CGPoint(x: r.minX, y: r.minY))
+        return path
+    }
+    
     static var sourceBezier : UIBezierPath {
         let shape = UIBezierPath()
         shape.move(to: CGPoint(x: 29.89, y: 33.05))
