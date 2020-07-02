@@ -19,7 +19,7 @@ struct SourceLogo : Shape {
     
     static var TEST_BEZIER  : UIBezierPath {
         let r = CGRect(origin: CGPoint(x: 200, y: 200),
-                       size: CGSize(width: 200, height: 400))
+                       size: CGSize(width: 500, height: 700))
         let path = UIBezierPath()
         path.move(to: CGPoint(x: r.minX, y: r.minY))
         path.addLine(to: CGPoint(x: r.maxX, y: r.minY))

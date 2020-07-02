@@ -14,10 +14,9 @@ enum BezierType {
 }
 
 struct LogosStackView : View {
-    
-    //@State vector =
-    @ObservedObject var model = LinesOnlyModel(source: SourceLogo.TEST_BEZIER)
-    
+
+    //@State var vector = CGPointVector(values: Path(SourceLogo.TEST_BEZIER.cgPath).verticesOnly())
+    @ObservedObject var model = LinesOnlyModel(source: SourceLogo.sourceBezier)
     
     var body: some View {
         ZStack {
@@ -32,18 +31,29 @@ struct LogosStackView : View {
 //            LinesOnlyLogo(vector: model.vector, bezierType: .lineSegments)
 //                .stroke(Color.black, lineWidth: 1)
             
+//            LinesOnlyLogo(vector: self.model.vector,
+//                          bezierType: .lineSegments)
+//                .fill(Color.blue)
+            
             LinesOnlyLogo(vector: self.model.vector,
                           bezierType: .markers,
-                          radius: 8)
-                .fill(Color.red)
-//                .stroke(Color.red, lineWidth: 2)
+                          radius: 12)
+                .fill(Color.black)
+            //                .stroke(Color.red, lineWidth: 3)
+            
+            LinesOnlyLogo(vector: self.model.vector,
+                          bezierType: .markers,
+                          radius: 10)
+                .fill(Color.orange)
+            
         }
         .background(Color.init(white: 0.9))
         .onTapGesture {
             print("TAP")
-            
-            //self.model.advanceVerticesToNextPosition()
-            self.model.movePointsInward(by: 20)
+            withAnimation(Animation.easeInOut(duration: 0.5)) {
+                self.model.advanceVerticesToNextPosition()
+//                self.model.movePointsInward(by: 60)
+            }
         }
     }
 }
@@ -69,11 +79,12 @@ struct LinesOnlyLogo : Shape {
                         path.move(to: pt) :
                         path.addLine(to: pt)
                 case .markers :
-                    print("LinesOnlyLogo.path(). [\(ix)]")
+                    print("LinesOnlyLogo.path()[MARKERS]. [\(ix)]")
                     path.move(to: pt)
                     path.addMarker(radius: radius)
                 }
             }
+            path.closeSubpath()
         }
     }
 }
