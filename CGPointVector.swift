@@ -11,6 +11,17 @@
 import SwiftUI
 
 struct CGPointVector: VectorArithmetic {
+    
+    var values: [CGPoint]
+    
+//    init(values: [CGPoint]) {
+//        self.values = values
+//    }
+    
+//    init(count: Int = 0) {
+//        values = [CGPoint](repeating: CGPoint.zero, count: count)
+//    }
+
     static var zero = CGPointVector(values: [.zero])
 
     static func - (lhs: CGPointVector, rhs: CGPointVector) -> CGPointVector {
@@ -38,10 +49,10 @@ struct CGPointVector: VectorArithmetic {
             lhs.values[i].animatableData += rhs.values[i].animatableData
         }
     }
-
-    var values: [CGPoint]
-
+    
     mutating func scale(by rhs: Double) {
+        print("CGPointVector.scale()")
+        
         for i in 0..<values.count {
             values[i].animatableData.scale(by: rhs)
         }
