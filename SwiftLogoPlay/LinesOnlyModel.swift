@@ -42,32 +42,6 @@ class LinesOnlyModel: ObservableObject {
         self.initialVector = CGPointVector(values: points)
     }
     
-    func movePointsInward(by delta: CGFloat) {
-
-        var points = [CGPoint]()
-        for i in 0..<vector.values.count {
-            var pt = vector.values[i]
-            switch (i) {
-            case 0:
-                pt.x += delta
-                pt.y += delta
-            case 1:
-                pt.x -= delta
-                pt.y += delta
-            case 2:
-                pt.x -= delta
-                pt.y -= delta
-            case 3:
-                pt.x += delta
-                pt.y -= delta
-            default :
-                pt.x = 0
-            }
-            points.append(pt)
-        }
-        self.vector = CGPointVector(values: points)
-    }
-    
     func advanceVerticesToNextPosition() {
         
         let first = vector.values.removeFirst()

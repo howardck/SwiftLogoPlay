@@ -5,7 +5,7 @@
 //  Created by Howard Katz on 2020-06-20.
 //  Copyright © 2020 Howard Katz. All rights reserved.
 
-//  originally titled AnimatableCGPointVector
+//  originally AnimatableCGPointVector
 //  from https://gist.github.com/mecid
 
 import SwiftUI
@@ -13,14 +13,6 @@ import SwiftUI
 struct CGPointVector: VectorArithmetic {
     
     var values: [CGPoint]
-    
-//    init(values: [CGPoint]) {
-//        self.values = values
-//    }
-    
-//    init(count: Int = 0) {
-//        values = [CGPoint](repeating: CGPoint.zero, count: count)
-//    }
 
     static var zero = CGPointVector(values: [.zero])
 
@@ -51,15 +43,12 @@ struct CGPointVector: VectorArithmetic {
     }
     
     mutating func scale(by rhs: Double) {
-        print("CGPointVector.scale()")
-        
         for i in 0..<values.count {
             values[i].animatableData.scale(by: rhs)
         }
     }
 
     var magnitudeSquared: Double {
-        print(".map.reduce()ing CGPoint data ...")
         return
             values
             .map { $0.animatableData.magnitudeSquared }
