@@ -7,13 +7,14 @@
 //
 //    as retrieved from the wikipedia svg resource
 //    https://commons.wikimedia.org/wiki/File:Swift_logo_with_text.svg
+//    and then slightly munged/corrected by stewart lynch
 
 import SwiftUI
 
 struct SourceLogo : Shape {
     
     func path(in rect: CGRect) -> Path {
-        let logoPath = Path(SourceLogo.sourceBezier.cgPath)
+        let logoPath = Path(SourceLogo.SOURCE_LOGO.cgPath)
         return logoPath.scaled(toFit: rect)
     }
     
@@ -26,11 +27,10 @@ struct SourceLogo : Shape {
         path.addLine(to: CGPoint(x: r.maxX, y: r.maxY))
         path.addLine(to: CGPoint(x: r.minX, y: r.maxY))
         path.close()
-        //path.addLine(to: CGPoint(x: r.minX, y: r.minY))
         return path
     }
     
-    static var sourceBezier : UIBezierPath {
+    static var SOURCE_LOGO : UIBezierPath {
         let shape = UIBezierPath()
         shape.move(to: CGPoint(x: 29.89, y: 33.05))
         shape.addCurve(to: CGPoint(x: 12.35, y: 33.25),
@@ -46,10 +46,10 @@ struct SourceLogo : Shape {
         shape.addCurve(to: CGPoint(x: 22.58, y: 25.48),
                        controlPoint1: CGPoint(x: 11.23, y: 28.59),
                        controlPoint2: CGPoint(x: 17.89, y: 28.38))
+// duplicate
 //        shape.addCurve(to: CGPoint(x: 22.58, y: 25.47),
 //                       controlPoint1: CGPoint(x: 22.58, y: 25.47),
 //                       controlPoint2: CGPoint(x: 22.58, y: 25.47))
-        
         shape.addCurve(to: CGPoint(x: 6.01, y: 8.23),
                        controlPoint1: CGPoint(x: 15.9, y: 20.35),
                        controlPoint2: CGPoint(x: 10.23, y: 13.68))
@@ -89,9 +89,6 @@ struct SourceLogo : Shape {
         shape.addCurve(to: CGPoint(x: 29.89, y: 33.05),
                        controlPoint1: CGPoint(x: 36.62, y: 30.65),
                        controlPoint2: CGPoint(x: 32.16, y: 32.09))
-        //shape.addLine(to: CGPoint(x: 29.89, y: 33.05))
-        //shape.close()
-        
         return shape
     }
 }

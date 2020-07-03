@@ -15,44 +15,48 @@ enum BezierType {
 
 struct LogosStackView : View {
 
-    //@State var vector = CGPointVector(values: Path(SourceLogo.TEST_BEZIER.cgPath).verticesOnly())
-    @ObservedObject var model = LinesOnlyModel(source: SourceLogo.sourceBezier)
+    @ObservedObject var model = LinesOnlyModel(source: SourceLogo.SOURCE_LOGO)
+    
+    init(size: CGSize) {
+        model.scaleVectors(to: size)
+    }
     
     var body: some View {
         ZStack {
             
-//            SourceLogo()
-//                .fill(Color.orange)
-//            SourceLogo()
-//                .stroke(Color.black, lineWidth: 0.4)
-//
-//            LinesOnlyLogo(model: model)
-//                .fill(Color.init(white: 0.85))
-//            LinesOnlyLogo(vector: model.vector, bezierType: .lineSegments)
-//                .stroke(Color.black, lineWidth: 1)
+            SourceLogo()
+                .fill(Color.orange)
+            SourceLogo()
+                .stroke(Color.black, lineWidth: 0.6)
+
+            LinesOnlyLogo(vector: model.initialVector,
+                          bezierType: .lineSegments)
+                .fill(Color.init(white: 0.8))
             
-//            LinesOnlyLogo(vector: self.model.vector,
-//                          bezierType: .lineSegments)
-//                .fill(Color.blue)
+            LinesOnlyLogo(vector: model.initialVector,
+                          bezierType: .lineSegments)
+                .stroke(Color.black, lineWidth: 1)
             
-            LinesOnlyLogo(vector: self.model.vector,
-                          bezierType: .markers,
-                          radius: 12)
-                .fill(Color.black)
-            //                .stroke(Color.red, lineWidth: 3)
-            
-            LinesOnlyLogo(vector: self.model.vector,
+            LinesOnlyLogo(vector: model.vector,
                           bezierType: .markers,
                           radius: 10)
-                .fill(Color.orange)
+                .fill(Color.black)
+            
+            LinesOnlyLogo(vector: model.vector,
+                          bezierType: .markers,
+                          radius: 9)
+                .fill(Color.green)
+            
+            LinesOnlyLogo(vector: model.vector,
+                          bezierType: .markers,
+                          radius: 2)
+                .fill(Color.white)
             
         }
         .background(Color.init(white: 0.9))
         .onTapGesture {
-            print("TAP")
-            withAnimation(Animation.easeInOut(duration: 0.5)) {
+            withAnimation(Animation.easeIn(duration: 1.5)) {
                 self.model.advanceVerticesToNextPosition()
-//                self.model.movePointsInward(by: 60)
             }
         }
     }
@@ -65,12 +69,14 @@ struct LinesOnlyLogo : Shape {
         get { vector }
         set { vector = newValue }
     }
+    //MARK: TODO: make an enum with .markers(let radius)
+    //MARK: TODO: and radius is hardwired platform-dependent
     var bezierType : BezierType = .lineSegments
-    var radius : CGFloat = 5  // iff type == .markers; kludgy?
+    var radius : CGFloat = 5
+    var animate = true
 
     func path(in rect: CGRect) -> Path {
-        print("LinesOnlyLogo.path()")
-
+        
         return Path { path in
             for (ix, pt) in vector.values.enumerated() {
                 switch(bezierType) {
@@ -79,7 +85,6 @@ struct LinesOnlyLogo : Shape {
                         path.move(to: pt) :
                         path.addLine(to: pt)
                 case .markers :
-                    print("LinesOnlyLogo.path()[MARKERS]. [\(ix)]")
                     path.move(to: pt)
                     path.addMarker(radius: radius)
                 }

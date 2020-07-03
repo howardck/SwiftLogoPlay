@@ -11,11 +11,9 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         
-        LogosStackView()
-        
-//        GeometryReader { gr in
-//            LogosStackView(size: gr.size)
-//        }
+        GeometryReader { gr in
+            LogosStackView(size: gr.size)
+        }
     }
 }
 

@@ -10,39 +10,39 @@ import SwiftUI
 
 class LinesOnlyModel: ObservableObject {
     
+    @Published var vector : CGPointVector
+    static let DEBUG = true
+    
     init(source: UIBezierPath) {
         self.source = source
+        // pass this in when we don't want animation
+        initialVector = CGPointVector(values: Path(source.cgPath).verticesOnly())
         vector = CGPointVector(values: Path(source.cgPath).verticesOnly())
     }
     
     var source: UIBezierPath
-    @Published var vector : CGPointVector
-//
-//    let source : UIBezierPath
-//    init(source: UIBezierPath) {
-//        self.source = source
-//        vector = CGPointVector(values: Path(source.cgPath).verticesOnly())
-//        print("")
-//    }
+    var initialVector : CGPointVector
     
-    func updateBounds(newBounds: CGRect) {
+    func scaleVectors(to size: CGSize) {
         
-        print("LineOnlyModel.updateBounds(): " +
-            "\n   oldBounds: {\(source.bounds)} " +
-            "\n   newBounds: {\(newBounds)}")
+        if LinesOnlyModel.DEBUG {
+            print("LineOnlyModel.updateBounds(): " +
+                "\n   oldBounds: {\(source.bounds)} " +
+                "\n   newBounds: {\(size)}")
+        }
         
-        let scaleX = newBounds.width/source.bounds.width
-        let scaleY = newBounds.height/source.bounds.height
+        let scaleX = size.width/source.bounds.width
+        let scaleY = size.height/source.bounds.height
         let scale = min(scaleX, scaleY)
         
         let points = vector.values.map {
             $0.applying(CGAffineTransform(scaleX: scale, y: scale))
         }
         self.vector = CGPointVector(values: points)
+        self.initialVector = CGPointVector(values: points)
     }
     
     func movePointsInward(by delta: CGFloat) {
-        print("Model.movePointsInward(). vector BEFORE:")
 
         var points = [CGPoint]()
         for i in 0..<vector.values.count {
@@ -66,26 +66,11 @@ class LinesOnlyModel: ObservableObject {
             points.append(pt)
         }
         self.vector = CGPointVector(values: points)
-        print("(Model.movePointsInward(). vector AFTER:")
-        print("")
     }
     
     func advanceVerticesToNextPosition() {
-        print("Model.advanceVerticesToNextPosition(). vector BEFORE:")
-        print("\(self.vector.values)")
         
-        //self.vector = CGPointVector(count: vector.values.count )
-        
-        var points = self.vector.values
-        let firstPt = points.first!
-        for index in 0..<points.count - 1 {
-            points[index] = points[index + 1]
-        }
-        points[points.count - 1] = firstPt
-        
-        print("Model.advanceVerticesToNextPosition(). vector AFTER:")
-        print("\(points)")
-        
-        self.vector = CGPointVector(values: points)
+        let first = vector.values.removeFirst()
+        vector.values.append(first)
     }
 }
