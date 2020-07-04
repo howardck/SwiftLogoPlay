@@ -71,7 +71,7 @@ struct LogosStackView : View {
               
               LinesOnlyLogo(vector: initialVector,
                             bezierType: .all_markers,
-                            radius: 7)
+                            radius: 6.5)
                   .fill(Color(UIColor.white))
               
               LinesOnlyLogo(vector: initialVector,
@@ -81,7 +81,8 @@ struct LogosStackView : View {
         }
     }
     
-    // all points "orbit" around the straight-line bezier
+    // all vertices "orbit" the periphery of the
+    // straight-line rendering of the bezier
     private func animatingSectionOfLogoStack(vector: CGPointVector) -> some View {
 
         Group {
