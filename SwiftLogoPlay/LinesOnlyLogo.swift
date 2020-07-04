@@ -30,7 +30,7 @@ struct LogosStackView : View {
         model.scaleVectors(to: size)
     }
     
-    // a subview as a PROPERTY
+    // a subview as a PROPERTY (just exploring)
     
     private var sourceLogoView : some View {
         Group {
