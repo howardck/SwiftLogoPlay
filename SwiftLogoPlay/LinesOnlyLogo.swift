@@ -33,31 +33,43 @@ struct LogosStackView : View {
     var body: some View {
         ZStack {
             
-            SourceLogo()
-                .fill(Color.orange)
-            SourceLogo()
-                .stroke(Color.black, lineWidth: 0.6)
+            Group {
+                SourceLogo()
+                    .fill(Color.orange)
+                SourceLogo()
+                    .stroke(Color.black, lineWidth: 0.6)
+            }
             
-            // ---------------------------------------
-            
-            LinesOnlyLogo(vector: model.initialVector,
-                          bezierType: .lineSegments)
-                .fill(Color.init(white: 0.88))
-            
-            LinesOnlyLogo(vector: model.initialVector,
-                          bezierType: .lineSegments)
-                .stroke(Color.black, lineWidth: 1)
+            Group { // non-animating
+                LinesOnlyLogo(vector: model.initialVector,
+                              bezierType: .lineSegments)
+                    .fill(Color.init(white: 0.88))
+                
+                LinesOnlyLogo(vector: model.initialVector,
+                              bezierType: .lineSegments)
+                    .stroke(Color.black, lineWidth: 1)
+                
+                LinesOnlyLogo(vector: model.initialVector,
+                              bezierType: .all_markers,
+                              radius: 6)
+                    .fill(Color(UIColor.white))
+                
+                LinesOnlyLogo(vector: model.initialVector,
+                              bezierType: .all_markers,
+                              radius: 5)
+                    .fill(Color.blue)
+            }
 
             // ---------------------------------------
 
             LinesOnlyLogo(vector: model.vector,
                           bezierType: .even_numbered_markers,
-                          radius: 11)
+                          radius: 11.5)
                 .fill(Color.black)
 
             LinesOnlyLogo(vector: model.vector,
                           bezierType: .even_numbered_markers,
-                          radius: 10.5)
+                          radius: 11)
                 .fill(Color.green)
             
             LinesOnlyLogo(vector: model.vector,
@@ -75,14 +87,15 @@ struct LogosStackView : View {
             LinesOnlyLogo(vector: model.vector,
                           bezierType: .odd_numbered_markers,
                           radius: 8.5)
-                .fill(Color.red)
+                .fill(Color.yellow)
 
             LinesOnlyLogo(vector: model.vector,
                           bezierType: .odd_numbered_markers,
-                          radius: 1.5)
+                          radius: 2)
                 .fill(Color.white)
         }
-            .background(Color.init(white: 0.15))
+//            .background(Color.init(white: 0.15))
+            .background(Color(UIColor.lightGray))
             
         .onTapGesture(count: 2) {
             withAnimation(Animation.easeIn(duration: 2)) {
@@ -119,48 +132,6 @@ struct EvenNumberedVertices : View {
                           bezierType: .even_numbered_markers,
                           radius: 2)
                 .fill(Color.white)
-        }
-    }
-}
-
-struct LinesOnlyLogo : Shape {
-    
-    var vector: CGPointVector
-    var animatableData: CGPointVector {
-        get { vector }
-        set { vector = newValue }
-    }
-    //MARK: TODO: make an enum with .markers(let radius)
-    //MARK: TODO: and radius is hardwired platform-dependent
-    var bezierType : BezierType = .lineSegments
-    var radius : CGFloat = 5
-    var animate = true
-
-    func path(in rect: CGRect) -> Path {
-        
-        return Path { path in
-            for (ix, pt) in vector.values.enumerated() {
-                switch(bezierType) {
-                case .lineSegments :
-                    ix == 0 ?
-                        path.move(to: pt) :
-                        path.addLine(to: pt)
-                case .all_markers :
-                    path.move(to: pt)
-                    path.addMarker(radius: radius)
-                case .even_numbered_markers :
-                    path.move(to: pt)
-                    if ix.isEven() {
-                        path.addMarker(radius: radius)
-                    }
-                case .odd_numbered_markers :
-                    path.move(to: pt)
-                    if !ix.isEven() {
-                        path.addMarker(radius: radius)
-                    }
-                }
-            }
-            path.closeSubpath()
         }
     }
 }

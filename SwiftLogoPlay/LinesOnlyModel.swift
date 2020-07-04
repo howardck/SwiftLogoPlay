@@ -48,3 +48,45 @@ class LinesOnlyModel: ObservableObject {
         vector.values.append(first)
     }
 }
+
+struct LinesOnlyLogo : Shape {
+    
+    var vector: CGPointVector
+    //MARK: TODO: make an enum with .markers(let radius)
+    //MARK: TODO: and radius is hardwired platform-dependent
+    var bezierType : BezierType = .lineSegments
+    var radius : CGFloat = 5
+    
+    var animatableData: CGPointVector {
+        get { vector }
+        set { vector = newValue }
+    }
+
+    func path(in rect: CGRect) -> Path {
+        
+        return Path { path in
+            for (ix, pt) in vector.values.enumerated() {
+                switch(bezierType) {
+                case .lineSegments :
+                    ix == 0 ?
+                        path.move(to: pt) :
+                        path.addLine(to: pt)
+                case .all_markers :
+                    path.move(to: pt)
+                    path.addMarker(radius: radius)
+                case .even_numbered_markers :
+                    path.move(to: pt)
+                    if ix.isEven() {
+                        path.addMarker(radius: radius)
+                    }
+                case .odd_numbered_markers :
+                    path.move(to: pt)
+                    if !ix.isEven() {
+                        path.addMarker(radius: radius)
+                    }
+                }
+            }
+            path.closeSubpath()
+        }
+    }
+}
