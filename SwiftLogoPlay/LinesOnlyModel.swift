@@ -15,9 +15,9 @@ class LinesOnlyModel: ObservableObject {
     
     init(source: UIBezierPath) {
         self.source = source
-        // pass this in when we don't want animation
+
         initialVector = CGPointVector(values: Path(source.cgPath).verticesOnly())
-        vector = CGPointVector(values: Path(source.cgPath).verticesOnly())
+        vector = initialVector
     }
     
     var source: UIBezierPath
