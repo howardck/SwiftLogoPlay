@@ -30,80 +30,80 @@ struct LogosStackView : View {
         model.scaleVectors(to: size)
     }
     
-    var body: some View {
-        ZStack {
-            
-            Group {
-                SourceLogo()
-                    .fill(Color.orange)
-                SourceLogo()
-                    .stroke(Color.black, lineWidth: 0.6)
-            }
-            
-            Group { // non-animating
-                LinesOnlyLogo(vector: model.initialVector,
-                              bezierType: .lineSegments)
-                    .fill(Color.init(white: 0.88))
-                
-                LinesOnlyLogo(vector: model.initialVector,
-                              bezierType: .lineSegments)
-                    .stroke(Color.black, lineWidth: 1)
-                
-                LinesOnlyLogo(vector: model.initialVector,
-                              bezierType: .all_markers,
-                              radius: 6)
-                    .fill(Color(UIColor.white))
-                
-                LinesOnlyLogo(vector: model.initialVector,
-                              bezierType: .all_markers,
-                              radius: 5)
-                    .fill(Color.blue)
-            }
+    // a subview as a PROPERTY
+    
+    private var sourceLogoView : some View {
+        Group {
+            SourceLogo()
+                .fill(Color.orange)
+            SourceLogo()
+                .stroke(Color.black, lineWidth: 0.6)
+        }
+    }
+    
+    // a subview as a FUNCTION
+    
+    private func nonAnimatingSectionOfLogoStack(initialVector: CGPointVector) -> some View {
 
-            // ---------------------------------------
+        Group {
+            LinesOnlyLogo(vector: initialVector,
+                            bezierType: .lineSegments)
+                  .fill(Color.init(white: 0.88))
+              
+              LinesOnlyLogo(vector: initialVector,
+                            bezierType: .lineSegments)
+                  .stroke(Color.black, lineWidth: 1)
+              
+              LinesOnlyLogo(vector: initialVector,
+                            bezierType: .all_markers,
+                            radius: 7)
+                  .fill(Color(UIColor.white))
+              
+              LinesOnlyLogo(vector: initialVector,
+                            bezierType: .all_markers,
+                            radius: 6)
+                  .fill(Color.red)
+        }
+    }
+    
+    private func animatingSectionOfLogoStack(vector: CGPointVector) -> some View {
 
-            LinesOnlyLogo(vector: model.vector,
+        Group {
+            LinesOnlyLogo(vector: vector,
                           bezierType: .all_markers,
                           radius: 11.5)
                 .fill(Color.black)
-
-            LinesOnlyLogo(vector: model.vector,
+            
+            LinesOnlyLogo(vector: vector,
                           bezierType: .all_markers,
                           radius: 11)
                 .fill(Color.green)
             
-            LinesOnlyLogo(vector: model.vector,
+            LinesOnlyLogo(vector: vector,
                           bezierType: .all_markers,
                           radius: 1.5)
                 .fill(Color.white)
-            
-            // ---------------------------------------
-
-//            LinesOnlyLogo(vector: model.vector,
-//                          bezierType: .odd_numbered_markers,
-//                          radius: 9)
-//                .fill(Color.black)
-//
-//            LinesOnlyLogo(vector: model.vector,
-//                          bezierType: .odd_numbered_markers,
-//                          radius: 8.5)
-//                .fill(Color.yellow)
-//
-//            LinesOnlyLogo(vector: model.vector,
-//                          bezierType: .odd_numbered_markers,
-//                          radius: 2)
-//                .fill(Color.white)
         }
-//            .background(Color.init(white: 0.15))
-            .background(Color(UIColor.lightGray))
+    }
+    
+    var body: some View {
+        ZStack {
+            
+            sourceLogoView
+
+            nonAnimatingSectionOfLogoStack(initialVector: model.initialVector)
+            
+            animatingSectionOfLogoStack(vector: model.vector)
+        }
+        .background(Color(UIColor.lightGray))
             
         .onTapGesture(count: 2) {
-            withAnimation(Animation.easeIn(duration: 2)) {
+            withAnimation(Animation.easeIn(duration: 3)) {
                 self.model.advanceVerticesToNextPosition()
             }
         }
         .onTapGesture(count: 1) {
-            withAnimation(Animation.easeIn(duration: 1.5)) {
+            withAnimation(Animation.easeIn(duration: 2.0)) {
                 self.model.advanceVerticesToNextPosition()
             }
         }
