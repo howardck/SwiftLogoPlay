@@ -63,36 +63,36 @@ struct LogosStackView : View {
             // ---------------------------------------
 
             LinesOnlyLogo(vector: model.vector,
-                          bezierType: .even_numbered_markers,
+                          bezierType: .all_markers,
                           radius: 11.5)
                 .fill(Color.black)
 
             LinesOnlyLogo(vector: model.vector,
-                          bezierType: .even_numbered_markers,
+                          bezierType: .all_markers,
                           radius: 11)
                 .fill(Color.green)
             
             LinesOnlyLogo(vector: model.vector,
-                          bezierType: .even_numbered_markers,
+                          bezierType: .all_markers,
                           radius: 1.5)
                 .fill(Color.white)
             
             // ---------------------------------------
 
-            LinesOnlyLogo(vector: model.vector,
-                          bezierType: .odd_numbered_markers,
-                          radius: 9)
-                .fill(Color.black)
-
-            LinesOnlyLogo(vector: model.vector,
-                          bezierType: .odd_numbered_markers,
-                          radius: 8.5)
-                .fill(Color.yellow)
-
-            LinesOnlyLogo(vector: model.vector,
-                          bezierType: .odd_numbered_markers,
-                          radius: 2)
-                .fill(Color.white)
+//            LinesOnlyLogo(vector: model.vector,
+//                          bezierType: .odd_numbered_markers,
+//                          radius: 9)
+//                .fill(Color.black)
+//
+//            LinesOnlyLogo(vector: model.vector,
+//                          bezierType: .odd_numbered_markers,
+//                          radius: 8.5)
+//                .fill(Color.yellow)
+//
+//            LinesOnlyLogo(vector: model.vector,
+//                          bezierType: .odd_numbered_markers,
+//                          radius: 2)
+//                .fill(Color.white)
         }
 //            .background(Color.init(white: 0.15))
             .background(Color(UIColor.lightGray))
