@@ -20,6 +20,7 @@ enum BezierType {
     case all_markers
     case even_numbered_markers
     case odd_numbered_markers
+    case origin_marker
 }
 
 struct LogosStackView : View {
@@ -30,9 +31,25 @@ struct LogosStackView : View {
         model.scaleVectors(to: size)
     }
     
-    // a subview as a PROPERTY (just exploring)
+    var body: some View {
+        ZStack {
+            
+            originalSwiftLogoAsBackground
+
+            nonAnimatingSectionOfLogoStack(initialVector: model.initialVector)
+            
+            animatingSectionOfLogoStack(vector: model.vector)
+        }
+        .background(Color(UIColor.lightGray))
+            
+        .onTapGesture(count: 1) {
+            withAnimation(Animation.easeIn(duration: 1.6)) {
+                self.model.advanceVerticesToNextPosition()
+            }
+        }
+    }
     
-    private var sourceLogoView : some View {
+    private var originalSwiftLogoAsBackground : some View {
         Group {
             SourceLogo()
                 .fill(Color.orange)
@@ -40,8 +57,6 @@ struct LogosStackView : View {
                 .stroke(Color.black, lineWidth: 0.6)
         }
     }
-    
-    // a subview as a FUNCTION
     
     private func nonAnimatingSectionOfLogoStack(initialVector: CGPointVector) -> some View {
 
@@ -66,6 +81,7 @@ struct LogosStackView : View {
         }
     }
     
+    // all points "orbit" around the straight-line bezier
     private func animatingSectionOfLogoStack(vector: CGPointVector) -> some View {
 
         Group {
@@ -83,53 +99,20 @@ struct LogosStackView : View {
                           bezierType: .all_markers,
                           radius: 1.5)
                 .fill(Color.white)
-        }
-    }
-    
-    var body: some View {
-        ZStack {
             
-            sourceLogoView
-
-            nonAnimatingSectionOfLogoStack(initialVector: model.initialVector)
-            
-            animatingSectionOfLogoStack(vector: model.vector)
-        }
-        .background(Color(UIColor.lightGray))
-            
-        .onTapGesture(count: 2) {
-            withAnimation(Animation.easeIn(duration: 3)) {
-                self.model.advanceVerticesToNextPosition()
-            }
-        }
-        .onTapGesture(count: 1) {
-            withAnimation(Animation.easeIn(duration: 2.0)) {
-                self.model.advanceVerticesToNextPosition()
-            }
-        }
-    }
-}
-
- //see above: this is a NO-OP
-struct EvenNumberedVertices : View {
-    
-    var model: LinesOnlyModel
-
-    var body: some View {
-                
-        Group {
-            LinesOnlyLogo(vector: model.vector,
-                          bezierType: .even_numbered_markers,
-                          radius: 10)
+            // one marker  to keep track of our starting point
+            LinesOnlyLogo(vector: vector,
+                          bezierType: .origin_marker,
+                          radius: 10.5)
                 .fill(Color.black)
             
-            LinesOnlyLogo(vector: model.vector,
-                          bezierType: .even_numbered_markers,
-                          radius: 9)
-                .fill(Color.green)
+            LinesOnlyLogo(vector: vector,
+                          bezierType: .origin_marker,
+                          radius: 10)
+                .fill(Color.blue)
             
-            LinesOnlyLogo(vector: model.vector,
-                          bezierType: .even_numbered_markers,
+            LinesOnlyLogo(vector: vector,
+                          bezierType: .origin_marker,
                           radius: 2)
                 .fill(Color.white)
         }

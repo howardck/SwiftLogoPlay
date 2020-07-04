@@ -67,10 +67,17 @@ struct LinesOnlyLogo : Shape {
         return Path { path in
             for (ix, pt) in vector.values.enumerated() {
                 switch(bezierType) {
+                    
                 case .lineSegments :
                     ix == 0 ?
                         path.move(to: pt) :
                         path.addLine(to: pt)
+                    
+                case .origin_marker :
+                    if ix == 0 {
+                        path.move(to: pt)
+                        path.addMarker(radius: radius)
+                    }
                 case .all_markers :
                     path.move(to: pt)
                     path.addMarker(radius: radius)
