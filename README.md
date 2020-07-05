@@ -3,4 +3,4 @@ An exploration of SwiftUI Path animation that started life as UIBezierPath deriv
 
 <img src="https://github.com/howardck/SwiftLogoPlay/blob/master/swiftlogo.png" height=450>
 
-[See an iPad version in action](http://fatdog.com/swiftLogoPlay/).
+[See an iPad version in action...](http://fatdog.com/swiftLogoPlay/)
